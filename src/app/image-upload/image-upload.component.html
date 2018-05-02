@@ -1,2 +1,41 @@
-<img [src]="url" height="200"> <br/>
-<input type='file' (change)="onSelectFile($event)">
+<body>
+<main>
+  <nav>
+    <div class="nav-wrapper">
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row center">
+      <input type="file" (change)="onSelectFile($event)">
+      <button class="waves-effect waves-light btn" (click)="onClickCamera()">{{text}}</button>
+    </div>
+    <div class="row">
+      <div class="col s8 m8 l8 offset-s2 offset-m2 offset-l2">
+        <img *ngIf="url" [src]="url" width="640" height="480">
+        <video #video width="640" height="480" autoplay [hidden]="state != 'camera'"></video>
+        <canvas #canvas width="640" height="480" [hidden]="state != 'image'"></canvas>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <p class="grey-text text-lighten-4">click the green button to open camera, capture picture and reset
+          picture.</p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h5 class="white-text">Links</h5>
+        <ul>
+          <li><a class="grey-text text-lighten-3" href="https://github.com/svsf91">Github</a></li>
+          <li><a class="grey-text text-lighten-3" href="https://www.linkedin.com/in/ch-deng">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+

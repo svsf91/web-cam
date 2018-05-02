@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-image-upload',
@@ -7,13 +7,19 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ImageUploadComponent implements OnInit {
 
+  @ViewChild('video') video: any;
+  @ViewChild('canvas') canvas: any;
   url = '';
-  file: any;
+  videoEle: any;
+  canvasEle: any;
+  state = 'empty';
+  text = 'open camera';
 
   constructor() {
   }
 
   ngOnInit() {
+    this.configVideo();
   }
 
   onSelectFile(event) {
@@ -28,6 +34,41 @@ export class ImageUploadComponent implements OnInit {
     }
   }
 
+  onClickCamera() {
+    switch(this.state) {
+      case 'empty': {
+        this.state = 'camera';
+        this.text = 'capture image';
+        break;
+      }
+      case 'camera': {
+        this.state = 'image';
+        this.text = 'reset';
+        this.onCapture();
+        break;
+      }
+      case 'image': {
+        this.state = 'empty';
+        this.text = 'open camera';
+        break;
+      }
+    }
+  }
 
+  configVideo() {
+    this.videoEle = this.video.nativeElement;
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({video: true})
+        .then(stream => {
+          this.videoEle.srcObject = stream;
+          this.videoEle.play();
+        })
+    }
+  }
+
+  onCapture() {
+    this.canvasEle = this.canvas.nativeElement;
+    this.canvasEle.getContext('2d').drawImage(this.videoEle, 0, 0);
+  }
 
 }

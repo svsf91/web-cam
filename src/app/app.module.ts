@@ -14,7 +14,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
   ],
   imports: [
     BrowserModule,
-    Routing
+    Routing,
   ],
   providers: [],
   bootstrap: [AppComponent]
